@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A modern, interactive full-stack FastAPI welcome application showcasing cloud readiness and delightful user experiences.">
+    <title>Welcome Portal | FastAPI + Python</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Background glowing ambient orbs -->
+    <div class="glow-orb orb-1" aria-hidden="true"></div>
+    <div class="glow-orb orb-2" aria-hidden="true"></div>
+    <div class="glow-orb orb-3" aria-hidden="true"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="navbar">
+            <div class="logo-group">
+                <div class="logo-icon">⚡</div>
+                <span class="logo-title">CloudWelcome</span>
+                <span class="badge badge-azure">FastAPI • Python</span>
+            </div>
+            <div class="system-status-indicator" id="system-status-pill">
+                <span class="status-dot"></span>
+                <span id="system-status-text">Connecting to backend...</span>
+            </div>
+        </header>
+
+        <!-- Main Hero Section -->
+        <main class="main-content">
+            <section class="hero-section">
+                <div class="hero-tag">
+                    <span class="sparkle">✨</span> Modern Cloud Welcome Experience
+                </div>
+                <h1 class="hero-heading">
+                    Welcome to the Next Era of <br>
+                    <span class="gradient-text">FastAPI Web Applications</span>
+                </h1>
+                <p class="hero-subtext">
+                    Experience a responsive Python backend integrated with real-time greetings, visitor telemetry, and Azure cloud deployment readiness.
+                </p>
+            </section>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Interactive Welcome Form Card -->
+                <div class="glass-card form-card">
+                    <div class="card-header">
+                        <div class="card-icon-badge">👋</div>
+                        <div>
+                            <h2>Check In & Get Welcomed</h2>
+                            <p class="card-subtitle">Tell us who you are for a customized greeting</p>
+                        </div>
+                    </div>
+
+                    <form id="welcome-form" class="welcome-form" onsubmit="return false;">
+                        <div class="form-group">
+                            <label for="visitor-name">Your Full Name <span class="required">*</span></label>
+                            <input 
+                                type="text" 
+                                id="visitor-name" 
+                                name="name" 
+                                placeholder="e.g. Jordan Rivera" 
+                                required 
+                                maxlength="50"
+                                autocomplete="name"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="visitor-role">Your Role or Title</label>
+                            <input 
+                                type="text" 
+                                id="visitor-role" 
+                                name="role" 
+                                placeholder="e.g. Cloud Engineer, Data Scientist" 
+                                maxlength="50"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Preferred Greeting Style</label>
+                            <div class="style-selector-grid">
+                                <label class="style-option">
+                                    <input type="radio" name="style" value="warm" checked>
+                                    <span class="style-chip">🌟 Warm & Friendly</span>
+                                </label>
+                                <label class="style-option">
+                                    <input type="radio" name="style" value="professional">
+                                    <span class="style-chip">💼 Professional</span>
+                                </label>
+                                <label class="style-option">
+                                    <input type="radio" name="style" value="futuristic">
+                                    <span class="style-chip">⚡ Futuristic AI</span>
+                                </label>
+                                <label class="style-option">
+                                    <input type="radio" name="style" value="playful">
+                                    <span class="style-chip">🎉 Playful</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="welcome-submit-btn" class="btn-primary">
+                            <span class="btn-text">Generate My Welcome</span>
+                            <span class="btn-icon">→</span>
+                        </button>
+                    </form>
+
+                    <!-- Active Welcome Result Display (Animated) -->
+                    <div id="welcome-result-box" class="welcome-result-box hidden">
+                        <div class="result-badge-row">
+                            <span class="badge badge-success">Personalized Greeting</span>
+                            <span id="result-timestamp" class="result-time">Just now</span>
+                        </div>
+                        <div class="result-body">
+                            <div id="result-avatar" class="result-avatar">JR</div>
+                            <div class="result-content">
+                                <h3 id="result-headline">Hello, Jordan Rivera!</h3>
+                                <p id="result-note">We are thrilled to welcome you as a Cloud Engineer!</p>
+                            </div>
+                        </div>
+                        <div class="result-actions">
+                            <button id="copy-greeting-btn" class="btn-ghost" title="Copy greeting message">
+                                📋 Copy Message
+                            </button>
+                            <a href="/docs" target="_blank" class="btn-ghost">
+                                📖 Swagger Docs
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats & Recent Visitors Feed Card -->
+                <div class="glass-card community-card">
+                    <div class="card-header">
+                        <div class="card-icon-badge">🌐</div>
+                        <div>
+                            <h2>Visitor Lounge</h2>
+                            <p class="card-subtitle">Real-time telemetry and community log</p>
+                        </div>
+                    </div>
+
+                    <!-- Live KPI Counters -->
+                    <div class="metrics-row">
+                        <div class="metric-item">
+                            <span class="metric-value" id="metric-total-visitors">--</span>
+                            <span class="metric-label">Total Welcomed</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value" id="metric-server-uptime">--</span>
+                            <span class="metric-label">Uptime (sec)</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value status-color-good" id="metric-health-status">Healthy</span>
+                            <span class="metric-label">System Health</span>
+                        </div>
+                    </div>
+
+                    <!-- Visitors List -->
+                    <div class="visitors-list-container">
+                        <div class="visitors-list-header">
+                            <span>Recent Visitors</span>
+                            <button id="refresh-visitors-btn" class="btn-icon-only" title="Refresh list">🔄</button>
+                        </div>
+                        <div id="visitors-list" class="visitors-list">
+                            <div class="loading-state">Loading visitors...</div>
+                        </div>
+                    </div>
+
+                    <!-- Cloud Architecture Callout -->
+                    <div class="azure-badge-card">
+                        <div class="azure-icon">☁️</div>
+                        <div class="azure-text">
+                            <strong>Azure Deployment Ready</strong>
+                            <span>Equipped with Dockerfile, Uvicorn ASGI server, and health probe endpoints.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-links">
+                <span>FastAPI v1.0.0</span>
+                <span>•</span>
+                <a href="/docs" target="_blank">Interactive Swagger Docs</a>
+                <span>•</span>
+                <a href="/redoc" target="_blank">ReDoc</a>
+                <span>•</span>
+                <a href="/api/health" target="_blank">Health Probe</a>
+            </div>
+            <p class="footer-copy">Crafted with FastAPI, Python & Modern Web Standards</p>
+        </footer>
+    </div>
+
+    <!-- Particle canvas / Confetti container -->
+    <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
