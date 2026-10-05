@@ -55,4 +55,4 @@ jobs:
           app-name: 'sre-agent-sneha'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F6F16BE4CEA343C3950E9451A345C127 }}
-          startup-command: 'python -m uvicorn main:app --host 0.0.0.0 --port 8000'
+
